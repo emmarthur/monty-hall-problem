@@ -17,7 +17,7 @@ PROGRESS_EVERY = 10_000
 
 
 def validate_door(door: int) -> None:
-    if door not DOORS:
+    if door not in DOORS:
         raise ValueError("Pick door 1, 2, or 3.")
 
 
