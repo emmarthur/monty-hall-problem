@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Monty Hall Problem</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Outfit:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="bg-blob bg-blob-a" aria-hidden="true"></div>
+    <div class="bg-blob bg-blob-b" aria-hidden="true"></div>
+
+    <main class="page">
+      <header class="hero">
+        <div class="hero-badge" aria-hidden="true">🚪</div>
+        <h1>Monty Hall Problem</h1>
+        <p class="tagline">Three doors, one car — should you switch?</p>
+        <button type="button" class="help-jump-btn" data-help-jump>Help</button>
+      </header>
+
+      <section class="card">
+        <h2 class="panel-title">Play one round</h2>
+        <p id="pick-prompt" class="hint">Pick a door to start.</p>
+        <div class="doors" id="doors">
+          <button type="button" class="door" data-door="1">Door 1</button>
+          <button type="button" class="door" data-door="2">Door 2</button>
+          <button type="button" class="door" data-door="3">Door 3</button>
+        </div>
+        <div id="choice-row" class="choice-row" hidden>
+          <button type="button" class="btn btn-primary" id="btn-stay">Stay</button>
+          <button type="button" class="btn btn-secondary" id="btn-switch">Switch</button>
+        </div>
+        <p id="round-result" class="result-line" role="status" aria-live="polite"></p>
+        <p id="error-text" class="error" role="alert" hidden></p>
+        <button type="button" class="btn btn-ghost" id="btn-reset-round" hidden>New round</button>
+      </section>
+
+      <section class="card">
+        <h2 class="panel-title">Monte Carlo</h2>
+        <p class="hint">Simulate {{ simulation_count | int }} random games and compare stay vs switch.</p>
+        <button type="button" class="btn btn-primary" id="monte-btn">Run simulation</button>
+        <div class="progress-wrap" aria-hidden="true">
+          <div id="progress-bar" class="progress-bar"></div>
+        </div>
+        <p id="monte-status" class="status" aria-live="polite"></p>
+        <div id="monte-stats" class="stats" hidden>
+          <div class="stat">
+            <span class="stat-label">Stay wins</span>
+            <span id="stay-stat" class="stat-value"></span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Switch wins</span>
+            <span id="switch-stat" class="stat-value"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card help" aria-labelledby="help-heading">
+        <h2 id="help-heading">Help</h2>
+        <h3>About this app</h3>
+        <p>
+          The <strong>Monty Hall problem</strong> is a probability puzzle: a car is behind one of three
+          doors and goats behind the others. You pick a door, the host (who knows what is behind each
+          door) opens a goat door, then you may stay on your original pick or switch to the other
+          closed door.
+        </p>
+        <h3>How to use it</h3>
+        <ul>
+          <li>Click <strong>Door 1–3</strong> to start. The host reveals a goat behind another door.</li>
+          <li>Choose <strong>Stay</strong> or <strong>Switch</strong> to see whether you win the car.</li>
+          <li>
+            <strong>Run simulation</strong> plays {{ simulation_count | int }} random rounds and shows
+            approximate win rates (switching wins about twice as often as staying).
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <script>
+      window.MONTY_CONFIG = { simulationCount: {{ simulation_count | int }} };
+    </script>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
